@@ -1,409 +1,371 @@
-<!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dwij Parekh | Cyber Security Professional</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dwij Parekh — Cybersecurity Engineer</title>
+<meta name="description" content="Dwij Parekh — Cybersecurity Engineer specializing in SIEM engineering, SOC operations, threat detection and incident response.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e14;
+    --bg-2:#0e141f;
+    --panel:#111826;
+    --panel-2:#0d1420;
+    --line:#1d2838;
+    --line-2:#263349;
+    --txt:#e6edf3;
+    --muted:#8b98a9;
+    --faint:#5c6b7e;
+    --accent:#33e6a0;
+    --accent-2:#36cfff;
+    --accent-dim:rgba(51,230,160,.12);
+    --warn:#ffc857;
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:'Space Grotesk',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--txt);
+    font-family:var(--sans);line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(54,207,255,.10), transparent 60%),
+      radial-gradient(800px 600px at 10% 10%, rgba(51,230,160,.08), transparent 55%);
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;position:relative;z-index:1}
+  a{color:inherit;text-decoration:none}
 
-    <style>
-        :root {
-            --primary-color: #0ea5e9; /* A brighter blue */
-            --secondary-color: #6366f1;
-            --background-color: #0f172a;
-            --card-background: #1e293b;
-            --text-color: #f8fafc;
-            --text-secondary: #94a3b8;
-            --bs-body-color: var(--text-color);
-            --bs-body-bg: var(--background-color);
-            --bs-link-color-rgb: 14, 165, 233;
-        }
+  /* NAV */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(12px);
+    background:rgba(10,14,20,.72);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{font-family:var(--mono);font-weight:700;letter-spacing:.5px;font-size:15px}
+  .brand .b{color:var(--accent)}
+  .navlinks{display:flex;gap:28px;font-size:14px;font-family:var(--mono)}
+  .navlinks a{color:var(--muted);transition:color .2s}
+  .navlinks a:hover{color:var(--accent)}
+  .menu-btn{display:none}
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color); /* Ensure text color is applied */
-        }
+  /* HERO */
+  .hero{padding:90px 0 70px;position:relative}
+  .term-tag{
+    display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);
+    font-size:12.5px;color:var(--accent);background:var(--accent-dim);
+    border:1px solid rgba(51,230,160,.25);padding:6px 14px;border-radius:40px;margin-bottom:26px;
+  }
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero h1{
+    font-size:clamp(38px,7vw,68px);line-height:1.04;margin:0 0 18px;font-weight:700;letter-spacing:-1.5px;
+  }
+  .hero h1 .grad{
+    background:linear-gradient(100deg,var(--accent),var(--accent-2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero .role{font-family:var(--mono);color:var(--accent-2);font-size:clamp(15px,2.4vw,20px);margin:0 0 24px;font-weight:500}
+  .hero p.lead{max-width:640px;color:var(--muted);font-size:17px;margin:0 0 34px}
+  .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    font-family:var(--mono);font-size:14px;font-weight:500;padding:12px 22px;border-radius:9px;
+    border:1px solid var(--line-2);transition:all .2s;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn.primary{background:var(--accent);color:#04120b;border-color:var(--accent);font-weight:700}
+  .btn.primary:hover{box-shadow:0 0 24px rgba(51,230,160,.4);transform:translateY(-2px)}
+  .btn.ghost{color:var(--txt);background:transparent}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
 
-        /* AI Particle Background */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
+  .meta-row{display:flex;gap:26px;flex-wrap:wrap;margin-top:40px;font-family:var(--mono);font-size:13px;color:var(--faint)}
+  .meta-row span b{color:var(--muted);font-weight:500}
 
-        /* Header */
-        .navbar {
-            transition: background-color 0.4s ease-in-out;
-        }
-        .navbar-brand {
-            background-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-        }
-        .navbar.scrolled {
-            background-color: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
-        }
-        .nav-link.active, .nav-link:hover {
-            color: var(--primary-color) !important;
-        }
+  /* SECTION */
+  section{padding:64px 0;position:relative}
+  .sec-head{display:flex;align-items:center;gap:16px;margin-bottom:40px}
+  .sec-head .idx{font-family:var(--mono);color:var(--accent);font-size:14px;font-weight:700}
+  .sec-head h2{font-size:clamp(24px,4vw,34px);margin:0;letter-spacing:-.5px;font-weight:600}
+  .sec-head .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line-2),transparent)}
 
-        /* General Styling */
-        .section-title {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 0.75rem;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 4px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border-radius: 2px;
-        }
-        
-        .card {
-            background-color: var(--card-background);
-            border: 1px solid #334155;
-            transition: all 0.3s ease-in-out;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(14, 165, 233, 0.2);
-            border-color: rgba(14, 165, 233, 0.5);
-        }
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 20px}
+  .stat .num{font-family:var(--mono);font-size:30px;font-weight:700;color:var(--accent);line-height:1}
+  .stat .lbl{color:var(--muted);font-size:13px;margin-top:8px}
 
-        /* Typing Animation */
-        .typing-cursor {
-            font-weight: 300;
-            animation: blink-caret .8s step-end infinite;
-            border-right: .15em solid var(--primary-color);
-        }
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--primary-color) }
-        }
+  /* EXPERIENCE */
+  .timeline{position:relative;padding-left:30px}
+  .timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--accent),var(--line))}
+  .job{position:relative;margin-bottom:38px}
+  .job::before{
+    content:"";position:absolute;left:-30px;top:6px;width:16px;height:16px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 4px rgba(51,230,160,.1)
+  }
+  .job .jtop{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;align-items:baseline}
+  .job h3{margin:0;font-size:19px;font-weight:600}
+  .job .co{color:var(--accent-2);font-family:var(--mono);font-size:14px}
+  .job .when{font-family:var(--mono);font-size:12.5px;color:var(--faint);white-space:nowrap}
+  .job .desc{color:var(--muted);font-size:15px;margin:10px 0 14px}
+  .job ul{margin:0;padding-left:0;list-style:none;display:grid;gap:8px}
+  .job ul li{position:relative;padding-left:22px;color:var(--muted);font-size:14.5px}
+  .job ul li::before{content:"▸";position:absolute;left:0;color:var(--accent);font-size:13px}
+  .projects{margin-top:16px;display:grid;gap:12px}
+  .proj{background:var(--panel-2);border:1px solid var(--line);border-left:2px solid var(--accent-2);border-radius:10px;padding:14px 18px}
+  .proj .pn{font-family:var(--mono);font-size:13.5px;color:var(--accent-2);font-weight:500;margin-bottom:6px}
+  .proj p{margin:0;font-size:14px;color:var(--muted)}
 
-        /* Scroll Animation */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #0c1829;
-            position: relative;
-            z-index: 1;
-        }
-        .footer-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .footer-link:hover {
-            color: var(--primary-color);
-        }
-    </style>
+  /* SKILLS */
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .skill-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;transition:border-color .2s,transform .2s}
+  .skill-card:hover{border-color:var(--line-2);transform:translateY(-3px)}
+  .skill-card h4{margin:0 0 14px;font-family:var(--mono);font-size:13px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-family:var(--mono);font-size:12.5px;color:var(--txt);background:var(--bg-2);border:1px solid var(--line);padding:5px 11px;border-radius:7px}
+
+  /* CERTS */
+  .certs{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .cert{display:flex;gap:14px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .cert .ic{flex:none;width:38px;height:38px;border-radius:9px;background:var(--accent-dim);border:1px solid rgba(51,230,160,.25);display:grid;place-items:center;color:var(--accent);font-family:var(--mono);font-size:15px}
+  .cert .cn{font-size:15px;font-weight:500;line-height:1.35}
+  .cert .ci{font-family:var(--mono);font-size:12px;color:var(--faint);margin-top:3px}
+
+  /* EDU */
+  .edu{display:grid;gap:12px}
+  .edu-item{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .edu-item .et{font-weight:500;font-size:16px}
+  .edu-item .es{color:var(--muted);font-size:14px;font-family:var(--mono)}
+  .edu-item .ey{font-family:var(--mono);font-size:12.5px;color:var(--faint)}
+
+  /* CONTACT */
+  .contact{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:48px 40px;text-align:center;position:relative;overflow:hidden}
+  .contact::before{content:"";position:absolute;inset:0;background:radial-gradient(500px 240px at 50% 0,rgba(51,230,160,.1),transparent 70%)}
+  .contact h2{font-size:clamp(26px,5vw,38px);margin:0 0 12px;position:relative}
+  .contact p{color:var(--muted);max-width:480px;margin:0 auto 28px;position:relative}
+  .contact-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
+
+  footer{border-top:1px solid var(--line);padding:30px 0;text-align:center;color:var(--faint);font-family:var(--mono);font-size:12.5px}
+
+  @media(max-width:760px){
+    .navlinks{display:none}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .skills-grid,.certs{grid-template-columns:1fr}
+    .hero{padding:64px 0 50px}
+  }
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+</style>
 </head>
-<body data-bs-spy="scroll" data-bs-target="#mainNavbar" data-bs-offset="100">
+<body>
 
-    <div id="particles-js"></div>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="brand"><span class="b">&gt;_</span> dwij.parekh</a>
+    <nav class="navlinks">
+      <a href="#about">about</a>
+      <a href="#experience">experience</a>
+      <a href="#skills">skills</a>
+      <a href="#certs">certs</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</header>
 
-    <!-- Header -->
-    <header>
-        <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark fixed-top p-3">
-            <div class="container">
-                <a class="navbar-brand fs-3" href="#">DP</a>
-                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto fs-5">
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#certificates">Certificates</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+<a id="top"></a>
+<div class="wrap">
+  <section class="hero">
+    <div class="term-tag"><span class="dot"></span> Available for security engineering roles</div>
+    <h1>Dwij Parekh<br><span class="grad">Cybersecurity Engineer</span></h1>
+    <p class="role">// SIEM Engineering · SOC Operations · Threat Detection</p>
+    <p class="lead">L2 Cybersecurity Engineer building detection rules, SIEM dashboards and ingestion controls that cut noise and surface real threats faster — across banking and large-enterprise environments.</p>
+    <div class="cta">
+      <a class="btn primary" href="#contact">Get in touch</a>
+      <a class="btn ghost" href="#experience">View experience</a>
+    </div>
+    <div class="meta-row">
+      <span><b>📍</b> Anand, Gujarat, India</span>
+      <span><b>✉</b> dwij.parekh.it@gmail.com</span>
+      <span><b>☎</b> +91 99745 34534</span>
+    </div>
+  </section>
+</div>
 
-    <!-- Main Content -->
-    <main class="container py-5" style="position: relative; z-index: 1;">
-        <!-- Hero Section -->
-        <section class="d-flex flex-column align-items-center justify-content-center text-center" id="hero" style="min-height: 100vh;">
-            <div class="py-5">
-                <h1 class="display-2 fw-bold mb-3">
-                    Dwij Parekh
-                </h1>
-                <p class="h2 text-body-secondary mb-4 fw-light">
-                    I am a <span id="typing-text" class="navbar-brand"></span><span class="typing-cursor"></span>
-                </p>
-                <p class="lead col-lg-8 mx-auto text-body-secondary">
-                    A dedicated and proactive Cyber Security professional with hands-on expertise in threat detection, vulnerability assessment, and incident response.
-                </p>
-                 <div class="d-flex justify-content-center gap-3 mt-4">
-                    <a href="#contact" class="btn btn-primary btn-lg px-4 rounded-pill">Contact Me</a>
-                    <a href="#about" class="btn btn-outline-light btn-lg px-4 rounded-pill">Learn More</a>
-                </div>
-            </div>
-        </section>
+<div class="wrap">
+  <section id="about">
+    <div class="sec-head reveal"><span class="idx">01</span><h2>About</h2><div class="rule"></div></div>
+    <div class="stats reveal">
+      <div class="stat"><div class="num">1.5+</div><div class="lbl">Years in cybersecurity</div></div>
+      <div class="stat"><div class="num">FortiSIEM</div><div class="lbl">Core SIEM platform</div></div>
+      <div class="stat"><div class="num">5+</div><div class="lbl">Industry certifications</div></div>
+      <div class="stat"><div class="num">L2</div><div class="lbl">Current engineering tier</div></div>
+    </div>
+    <p class="reveal" style="color:var(--muted);font-size:16.5px;max-width:760px;margin-top:28px">
+      Cybersecurity Engineer with professional experience spanning Security Operations Center (SOC) analysis and SIEM
+      engineering. Proven expertise in threat detection, alert triage, log analysis, incident root cause analysis, and
+      detection-rule development on FortiSIEM. Currently an L2 Cybersecurity Engineer responsible for dashboard design,
+      rule creation and sanitization, ingestion and event-dropping controls, SIEM training delivery, and customer
+      technical support across multiple client environments — including banking and large enterprise accounts.
+    </p>
+  </section>
 
-        <!-- About Section (Objective) -->
-        <section class="py-5 my-5 text-center fade-in-section" id="about">
-            <h2 class="display-4 fw-bold mb-5 section-title">About Me</h2>
-            <div class="col-xl-10 mx-auto">
-                <div class="card text-start">
-                    <div class="card-body p-5">
-                        <p class="lead text-body-secondary">
-                           A highly motivated and detail-oriented Bachelor of Engineering (IT) student with a strong academic foundation and practical experience in cybersecurity. Proficient in penetration testing, vulnerability assessment, and digital forensics using tools like Kali Linux, Nessus, and Burp Suite. Committed to contributing meaningfully to a Security Operations Center (SOC) team.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Core Qualifications (Skills) Section -->
-        <section class="py-5 my-5 fade-in-section" id="skills">
-            <h2 class="display-4 fw-bold mb-5 text-center section-title">Core Skills</h2>
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold mb-2"><i class="bi bi-shield-shaded me-2 fs-4 text-primary"></i>SIEM Tools</h3><p class="text-body-secondary">Experienced with FortiSIEM, administration, integration, and rule creation.</p></div></div></div>
-                <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold mb-2"><i class="bi bi-journal-text me-2 fs-4 text-primary"></i>Log Analysis</h3><p class="text-body-secondary">Skilled in analyzing logs from firewalls, IDS/IPS, and servers to detect anomalies.</p></div></div></div>
-                <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold mb-2"><i class="bi bi-binoculars me-2 fs-4 text-primary"></i>Threat Detection</h3><p class="text-body-secondary">Identifying suspicious activity, potential threats, and security incidents.</p></div></div></div>
-                <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold mb-2"><i class="bi bi-diagram-3 me-2 fs-4 text-primary"></i>Incident Triage</h3><p class="text-body-secondary">Categorizing, prioritizing, and escalating alerts based on severity and impact.</p></div></div></div>
-                <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold mb-2"><i class="bi bi-hdd-network me-2 fs-4 text-primary"></i>Networking Fundamentals</h3><p class="text-body-secondary">Understanding of TCP/IP, ports, DNS, DHCP, and common protocols.</p></div></div></div>
-                <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold mb-2"><i class="bi bi-fire me-2 fs-4 text-primary"></i>Firewall Monitoring</h3><p class="text-body-secondary">Basic knowledge of FortiGate, Palo Alto firewalls and traffic analysis.</p></div></div></div>
-                <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold mb-2"><i class="bi bi-database-gear me-2 fs-4 text-primary"></i>Ticketing Systems</h3><p class="text-body-secondary">Experience with ServiceNow & Jira for incident tracking and workflow management.</p></div></div></div>
-            </div>
-        </section>
+  <section id="experience">
+    <div class="sec-head reveal"><span class="idx">02</span><h2>Experience</h2><div class="rule"></div></div>
+    <div class="timeline">
 
-        <!-- Experience & Internship Section -->
-        <section class="py-5 my-5 fade-in-section" id="experience">
-            <h2 class="display-4 fw-bold mb-5 text-center section-title">Experience</h2>
-            <div class="row g-4 justify-content-center">
-                <div class="col-lg-6">
-                    <div class="card h-100"><div class="card-body p-4">
-                        <h3 class="fs-4 fw-bold mb-2">L1 SOC Analyst</h3>
-                        <p class="text-body-secondary mb-2"><i class="bi bi-building me-2"></i>Techowl Infosec Private Limited | 2025 - Present</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card h-100"><div class="card-body p-4">
-                        <h3 class="fs-4 fw-bold mb-2">Cyber Security Intern</h3>
-                        <p class="text-body-secondary mb-2"><i class="bi bi-building me-2"></i>Rise Technologies | 15 days</p>
-                        <p class="text-body-secondary mb-0">Gained experience in WI-FI hacking, phishing, steganography, game hacking, and rubber ducky scripting.</p>
-                    </div></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Education Section -->
-        <section class="py-5 my-5 fade-in-section" id="education">
-            <h2 class="display-4 fw-bold mb-5 text-center section-title">Education</h2>
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-6 col-lg-5"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold">B.E in Information Technology</h3><p class="text-body-secondary">Sardar Patel College of Engineering<br>2023 - 2025</p></div></div></div>
-                <div class="col-md-6 col-lg-5"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold">Diploma in Information Technology</h3><p class="text-body-secondary">R.C. Technical Institute of Technology<br>2019 - 2021 (CGPA: 6.93)</p></div></div></div>
-                <div class="col-md-6 col-lg-5"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold">Penetration Testing & Digital Forensics</h3><p class="text-body-secondary">cybersecurityindia.org<br>2022</p></div></div></div>
-                <div class="col-md-6 col-lg-5"><div class="card h-100"><div class="card-body p-4"><h3 class="fs-5 fw-bold">High School (10th)</h3><p class="text-body-secondary">D.N. High School<br>65%</p></div></div></div>
-            </div>
-        </section>
-
-        <!-- Certificates Section -->
-        <section class="py-5 my-5 fade-in-section" id="certificates">
-            <h2 class="display-4 fw-bold mb-5 text-center section-title">Certificates</h2>
-            <div class="col-xl-10 mx-auto">
-                <div class="card"><div class="card-body p-4">
-                    <ul class="list-unstyled mb-0 fs-5">
-                        <li class="mb-2"><i class="bi bi-patch-check-fill me-2 text-primary"></i>Fortinet Certified Associate in Cybersecurity</li>
-                        <li class="mb-2"><i class="bi bi-patch-check-fill me-2 text-primary"></i>Introduction to Cyber Security - SimpliLearn</li>
-                        <li class="mb-2"><i class="bi bi-patch-check-fill me-2 text-primary"></i>Junior Cyber Expert - Cyber Security India</li>
-                        <li class="mb-2"><i class="bi bi-patch-check-fill me-2 text-primary"></i>Certified in Penetration Testing & Digital Forensics</li>
-                        <li><i class="bi bi-patch-check-fill me-2 text-primary"></i>Certified in Cyber Crime Investigation & Digital Forensics</li>
-                    </ul>
-                </div></div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="py-5 my-5 fade-in-section" id="contact">
-            <h2 class="display-4 fw-bold mb-5 text-center section-title">Get In Touch</h2>
-            <div class="col-lg-8 mx-auto">
-                <div class="card text-center"><div class="card-body p-5">
-                    <p class="lead mb-4">My inbox is always open, feel free to reach out!</p>
-                    <a href="mailto:dwijparekh.pif@gmail.com" class="btn btn-primary btn-lg rounded-pill px-4"><i class="bi bi-envelope-fill me-2"></i>dwijparekh.pif@gmail.com</a>
-                </div></div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="pt-5 pb-4">
-        <div class="container text-center text-md-start">
-            <div class="row gy-4">
-                <div class="col-md-4 col-lg-5">
-                    <h5 class="text-uppercase fw-bold navbar-brand">Dwij Parekh</h5>
-                    <p class="text-body-secondary">A cybersecurity professional dedicated to protecting digital assets through proactive threat detection and incident response.</p>
-                </div>
-                <div class="col-md-2 col-lg-2">
-                    <h5 class="text-uppercase fw-bold mb-3">Links</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#about" class="footer-link">About</a></li>
-                        <li class="mb-2"><a href="#skills" class="footer-link">Skills</a></li>
-                        <li class="mb-2"><a href="#experience" class="footer-link">Experience</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 col-lg-3">
-                    <h5 class="text-uppercase fw-bold mb-3">Contact</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="mailto:dwijparekh.pif@gmail.com" class="footer-link"><i class="bi bi-envelope me-2"></i>Email Me</a></li>
-                        <li class="mb-2"><a href="tel:+919974534534" class="footer-link"><i class="bi bi-telephone me-2"></i>+91 99745 34534</a></li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="my-4" style="border-color: #334155;">
-            <div class="text-center text-body-secondary">
-                &copy; <span id="currentYear"></span> Dwij Parekh. All Rights Reserved.
-            </div>
+      <div class="job reveal">
+        <div class="jtop">
+          <div><h3>Cybersecurity Engineer (L2)</h3><div class="co">Techowl Infosec</div></div>
+          <div class="when">Sep 2025 – Present</div>
         </div>
-    </footer>
+        <p class="desc">SIEM engineering across detection-rule development, platform optimization, client-specific delivery and technical support within a managed security services environment.</p>
+        <ul>
+          <li>Design and build custom SIEM dashboards for real-time visibility into security events, alert trends and client KPIs.</li>
+          <li>Develop new detection rules from threat-intel feeds, TTPs and analyst feedback to improve coverage and reduce dwell time.</li>
+          <li>Sanitize and tune existing rules — reviewing logic, eliminating false positives and optimizing performance at scale.</li>
+          <li>Manage event ingestion and dropping controls to cut noise, control log-storage costs and maintain data quality.</li>
+          <li>Provide technical support on SIEM onboarding, log-source configuration, rule logic and alert investigations.</li>
+          <li>Collaborate with SOC analysts to turn operational gaps into new detections and dashboard improvements.</li>
+        </ul>
+        <div class="projects">
+          <div class="proj">
+            <div class="pn">⬡ State Bank of Mauritius (SBM)</div>
+            <p>Managed and optimized ingestion-dropping controls for client environments, reducing unnecessary log volume while preserving detection-relevant data and aligning policies with data-quality and storage-cost objectives.</p>
+          </div>
+          <div class="proj">
+            <div class="pn">⬡ TCS, Bangalore</div>
+            <p>Created custom detection rules tailored to the client's security devices and use cases, delivered SIEM training to enable client teams, and configured ingestion controls to optimize log flow and data quality.</p>
+          </div>
+        </div>
+      </div>
 
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- tsParticles for background animation -->
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.1.0/tsparticles.bundle.min.js"></script>
+      <div class="job reveal">
+        <div class="jtop">
+          <div><h3>L1 SOC Analyst</h3><div class="co">Techowl Infosec Private Limited</div></div>
+          <div class="when">Jan 2025 – Aug 2025</div>
+        </div>
+        <p class="desc">First-line security analyst monitoring, triaging and investigating alerts across multiple client environments using FortiSIEM.</p>
+        <ul>
+          <li>Monitored and analyzed alerts in FortiSIEM to detect threats and anomalies in real time across client environments.</li>
+          <li>Performed alert integration, triage and correlation across Windows, Firewall, VPN, Email Security and Endpoint log sources.</li>
+          <li>Conducted root cause analysis (RCA) on recurring and high-severity incidents with written findings and remediation steps.</li>
+          <li>Detected malware behavior, brute-force attempts, phishing campaigns and lateral-movement patterns.</li>
+          <li>Coordinated with networking teams on firewall rule validation, NAT/SNAT verification and log-forwarding troubleshooting.</li>
+          <li>Prepared daily and weekly threat reports; managed incident workflows in ServiceNow and Jira for SLA compliance.</li>
+        </ul>
+      </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Set current year
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
+      <div class="job reveal">
+        <div class="jtop">
+          <div><h3>Cybersecurity Intern</h3><div class="co">Rise Technologies</div></div>
+          <div class="when">2024 · 15 days</div>
+        </div>
+        <p class="desc">Short-term internship focused on hands-on offensive techniques and scripting in a supervised lab.</p>
+        <ul>
+          <li>Conducted practical exercises in Wi-Fi hacking, phishing simulations and steganography.</li>
+          <li>Developed HID attack scripts using Rubber Ducky hardware for security-awareness demonstrations.</li>
+        </ul>
+      </div>
 
-            // Navbar scroll effect
-            const nav = document.getElementById('mainNavbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    nav.classList.add('scrolled');
-                } else {
-                    nav.classList.remove('scrolled');
-                }
-            });
+    </div>
+  </section>
 
-            // Typing animation logic
-            (function() {
-                const titles = ['Cyber Security Analyst', 'L1 SOC Analyst', 'Penetration Tester'];
-                let titleIndex = 0;
-                let charIndex = 0;
-                const speed = 100;
-                const element = document.getElementById('typing-text');
+  <section id="skills">
+    <div class="sec-head reveal"><span class="idx">03</span><h2>Core Competencies</h2><div class="rule"></div></div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <h4>▣ SIEM &amp; Detection</h4>
+        <div class="chips">
+          <span class="chip">FortiSIEM</span><span class="chip">Rule Creation</span><span class="chip">Dashboard Design</span>
+          <span class="chip">Ingestion Tuning</span><span class="chip">Event Dropping</span><span class="chip">Anomaly Detection</span>
+          <span class="chip">Behavioral Analysis</span><span class="chip">Lateral Movement</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h4>▣ Incident Response</h4>
+        <div class="chips">
+          <span class="chip">Alert Triage</span><span class="chip">Escalation</span><span class="chip">Root Cause Analysis</span>
+          <span class="chip">Containment Guidance</span><span class="chip">Brute-force / Phishing</span><span class="chip">Threat Reporting</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h4>▣ Log Analysis</h4>
+        <div class="chips">
+          <span class="chip">Firewalls</span><span class="chip">IDS/IPS</span><span class="chip">Windows Events</span>
+          <span class="chip">VPN</span><span class="chip">Email Security</span><span class="chip">Endpoint Logs</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h4>▣ Networking &amp; Firewalls</h4>
+        <div class="chips">
+          <span class="chip">TCP/IP</span><span class="chip">DNS</span><span class="chip">DHCP</span><span class="chip">OSI Model</span>
+          <span class="chip">Routing</span><span class="chip">FortiGate</span><span class="chip">Palo Alto</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h4>▣ Offensive &amp; Forensics</h4>
+        <div class="chips">
+          <span class="chip">Kali Linux</span><span class="chip">Burp Suite</span><span class="chip">Nessus</span>
+          <span class="chip">Metasploit</span><span class="chip">Evidence Acquisition</span><span class="chip">Disk/Memory Analysis</span><span class="chip">Chain of Custody</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h4>▣ Tooling &amp; Systems</h4>
+        <div class="chips">
+          <span class="chip">ServiceNow</span><span class="chip">Jira</span><span class="chip">Windows Server</span>
+          <span class="chip">Linux</span><span class="chip">Ubuntu</span><span class="chip">SLA Monitoring</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                function typeText() {
-                    const currentTitle = titles[titleIndex];
-                    if (charIndex < currentTitle.length) {
-                        element.textContent += currentTitle.charAt(charIndex);
-                        charIndex++;
-                        setTimeout(typeText, speed);
-                    } else {
-                        setTimeout(eraseText, 2000);
-                    }
-                }
+  <section id="certs">
+    <div class="sec-head reveal"><span class="idx">04</span><h2>Certifications</h2><div class="rule"></div></div>
+    <div class="certs">
+      <div class="cert reveal"><div class="ic">◆</div><div><div class="cn">Fortinet Certified Associate in Cybersecurity (FCA)</div><div class="ci">Fortinet</div></div></div>
+      <div class="cert reveal"><div class="ic">◆</div><div><div class="cn">Certified Network Security Practitioner (CNSP)</div><div class="ci">SecOps Group</div></div></div>
+      <div class="cert reveal"><div class="ic">◆</div><div><div class="cn">Certified in Penetration Testing &amp; Digital Forensics</div><div class="ci">Cyber Security India</div></div></div>
+      <div class="cert reveal"><div class="ic">◆</div><div><div class="cn">Certified in Cyber Crime Investigation &amp; Digital Forensics</div><div class="ci">Cyber Security India</div></div></div>
+      <div class="cert reveal"><div class="ic">◆</div><div><div class="cn">Junior Cyber Expert</div><div class="ci">Cyber Security India</div></div></div>
+    </div>
+  </section>
 
-                function eraseText() {
-                    const currentTitle = titles[titleIndex];
-                    if (charIndex > 0) {
-                        element.textContent = currentTitle.substring(0, charIndex - 1);
-                        charIndex--;
-                        setTimeout(eraseText, speed / 2);
-                    } else {
-                        titleIndex = (titleIndex + 1) % titles.length;
-                        setTimeout(typeText, 500);
-                    }
-                }
-                typeText();
-            })();
+  <section id="education">
+    <div class="sec-head reveal"><span class="idx">05</span><h2>Education</h2><div class="rule"></div></div>
+    <div class="edu">
+      <div class="edu-item reveal"><div><div class="et">B.E. — Information Technology</div><div class="es">Sardar Patel College of Engineering</div></div><div class="ey">2023 – 2025</div></div>
+      <div class="edu-item reveal"><div><div class="et">Diploma in Information Technology</div><div class="es">R.C. Technical Institute of Technology · CGPA 6.93</div></div><div class="ey">2019 – 2021</div></div>
+      <div class="edu-item reveal"><div><div class="et">Penetration Testing &amp; Digital Forensics Training</div><div class="es">Cyber Security India</div></div><div class="ey">2022</div></div>
+      <div class="edu-item reveal"><div><div class="et">High School (10th Standard)</div><div class="es">D.N. High School · 65%</div></div><div class="ey">—</div></div>
+    </div>
+  </section>
 
-            // Intersection Observer for scroll animations
-            const sections = document.querySelectorAll('.fade-in-section');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            sections.forEach(section => observer.observe(section));
+  <section id="contact">
+    <div class="contact reveal">
+      <h2>Let's work together</h2>
+      <p>Open to cybersecurity engineering and SOC roles. Reach out for collaboration, opportunities, or a chat about detection engineering.</p>
+      <div class="contact-links">
+        <a class="btn primary" href="mailto:dwij.parekh.it@gmail.com">✉ Email me</a>
+        <a class="btn ghost" href="tel:+919974534534">☎ +91 99745 34534</a>
+      </div>
+    </div>
+  </section>
+</div>
 
-            // tsParticles configuration
-            tsParticles.load({
-                id: "particles-js",
-                options: {
-                    background: { color: { value: "#0f172a" } },
-                    fpsLimit: 60,
-                    interactivity: {
-                        events: {
-                            onHover: { enable: true, mode: "repulse" },
-                        },
-                        modes: {
-                            repulse: { distance: 100, duration: 0.4 },
-                        },
-                    },
-                    particles: {
-                        color: { value: "#1e40af" },
-                        links: {
-                            color: "#3b82f6",
-                            distance: 150,
-                            enable: true,
-                            opacity: 0.2,
-                            width: 1,
-                        },
-                        move: {
-                            direction: "none",
-                            enable: true,
-                            outModes: "out",
-                            random: true,
-                            speed: 1,
-                            straight: false,
-                        },
-                        number: { density: { enable: true }, value: 80 },
-                        opacity: { value: 0.3 },
-                        shape: { type: "circle" },
-                        size: { value: { min: 1, max: 3 } },
-                    },
-                    detectRetina: true,
-                },
-            });
-        });
-    </script>
+<footer>
+  <div class="wrap">&gt;_ Dwij Parekh · Cybersecurity Engineer · built &amp; secured with care</div>
+</footer>
+
+<script>
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 </body>
 </html>
-
-
-
