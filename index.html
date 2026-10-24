@@ -85,7 +85,7 @@
   .chip:hover{color:var(--grn);border-color:var(--grn);box-shadow:0 0 12px rgba(57,255,155,.2)}
 
   /* sidebar */
-  .side{border-left:1px solid var(--line);padding:18px 16px;overflow-y:auto;background:rgba(8,12,19,.6)}
+  .side{border-left:1px solid var(--line);padding:18px 16px;overflow-y:auto;background:rgba(8,12,19,.6);display:flex;flex-direction:column}
   .panel{margin-bottom:22px}
   .panel h5{margin:0 0 10px;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);font-weight:500;display:flex;align-items:center;gap:7px}
   .panel h5::before{content:"";width:5px;height:5px;background:var(--grn);border-radius:50%;box-shadow:0 0 8px var(--grn)}
@@ -94,35 +94,12 @@
   .mtr .top b{color:var(--txt)}
   .track{height:5px;background:var(--line);border-radius:5px;overflow:hidden}
   .fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--grn),var(--cyan))}
-  .feed{font-size:11px;line-height:1.85;color:var(--faint);max-height:150px;overflow:hidden}
+  .panel.grow{flex:1;display:flex;flex-direction:column;min-height:0;margin-bottom:12px}
+  .panel.grow .feed{flex:1;max-height:none}
+  .feed{font-size:11.5px;line-height:2;color:var(--faint);overflow:hidden;min-height:0}
+  .feed > div{animation:fade .3s ease both}
   .feed .t{color:var(--dim)} .feed .ip{color:var(--cyan)} .feed .blk{color:var(--grn)} .feed .alrt{color:var(--amber)}
   .clock{font-size:11.5px;color:var(--dim)} .clock b{color:var(--cyan)}
-
-  /* threat-map button + modal */
-  .mapbtn{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--amber);background:rgba(255,194,75,.08);
-    border:1px solid rgba(255,194,75,.35);border-radius:20px;padding:5px 14px;cursor:pointer;transition:all .18s;white-space:nowrap}
-  .mapbtn:hover{color:#05080d;background:var(--amber);box-shadow:0 0 16px rgba(255,194,75,.4)}
-  .mapbtn i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:6px;box-shadow:0 0 8px var(--red);animation:blink 1.2s steps(1) infinite;vertical-align:middle}
-  .bar .status{margin-left:16px}
-  @media(max-width:680px){.mapbtn{margin-left:auto}}
-
-  .overlay{position:fixed;inset:0;z-index:40;background:rgba(3,5,9,.78);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:18px;animation:fade .25s both}
-  .overlay.on{display:flex}
-  .mapwin{width:min(1000px,96vw);height:min(640px,86vh);background:var(--panel);border:1px solid var(--line2);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.6)}
-  .mapwin .wtop{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);background:rgba(10,15,23,.9)}
-  .mapwin .wtop .lights i{width:11px;height:11px;border-radius:50%;display:block}
-  .mapwin .wtop .lights{display:flex;gap:7px}
-  .mapwin .wtop .wt{color:var(--amber);font-size:12.5px;font-family:var(--mono)}
-  .mapwin .wtop .wt i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:7px;box-shadow:0 0 8px var(--red);animation:blink 1.2s steps(1) infinite}
-  .mapwin .wtop .acts{margin-left:auto;display:flex;gap:10px;align-items:center}
-  .mapwin .wtop .acts a{color:var(--cyan);font-size:11.5px;font-family:var(--mono);border-bottom:1px dotted var(--cyan)}
-  .mapwin .wtop .x{color:var(--dim);font-size:16px;cursor:pointer;line-height:1;padding:0 4px}
-  .mapwin .wtop .x:hover{color:var(--red)}
-  .mapwin .frame{flex:1;position:relative;background:#000}
-  .mapwin iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-  .mapwin .fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:30px;color:var(--dim);font-family:var(--mono);font-size:13px}
-  .mapwin .fallback .big{color:var(--amber);font-size:15px}
-  .mapwin .fallback a{color:#05080d;background:var(--amber);padding:9px 18px;border-radius:8px;font-weight:700;font-size:13px}
 </style>
 </head>
 <body>
@@ -145,7 +122,6 @@
   <div class="bar">
     <div class="lights"><i class="r"></i><i class="y"></i><i class="g"></i></div>
     <div class="title"><b>dwij@soc-console</b>: ~/portfolio &mdash; secure shell</div>
-    <button class="mapbtn" onclick="openMap()"><i></i>LIVE THREAT MAP</button>
     <div class="status">
       <span class="thr">THREAT LVL: <b>GUARDED</b></span>
       <span>SESSION: <b id="uptime">00:00:00</b></span>
@@ -164,7 +140,7 @@
         <div class="mtr"><div class="top"><span>Log Analysis</span><b>90%</b></div><div class="track"><div class="fill" style="width:90%"></div></div></div>
         <div class="mtr"><div class="top"><span>Pen Testing</span><b>72%</b></div><div class="track"><div class="fill" style="width:72%"></div></div></div>
       </div>
-      <div class="panel">
+      <div class="panel grow">
         <h5>Live Event Feed</h5>
         <div class="feed" id="feed"></div>
       </div>
@@ -179,29 +155,6 @@
   <div class="inputrow">
     <span class="ps"><span class="usr">dwij</span>@soc:<span class="path">~/portfolio</span>$</span>
     <input id="cmd" autocomplete="off" autofocus spellcheck="false" aria-label="terminal command input">
-  </div>
-</div>
-
-<!-- LIVE THREAT MAP MODAL -->
-<div class="overlay" id="overlay">
-  <div class="mapwin">
-    <div class="wtop">
-      <div class="lights"><i class="r" style="background:#ff5f56"></i><i class="y" style="background:#ffbd2e"></i><i class="g" style="background:#27c93f"></i></div>
-      <span class="wt"><i></i>LIVE GLOBAL THREAT MAP &mdash; radware.com</span>
-      <div class="acts">
-        <a href="https://livethreatmap.radware.com/" target="_blank" rel="noopener">open full map ↗</a>
-        <span class="x" onclick="closeMap()" title="close">✕</span>
-      </div>
-    </div>
-    <div class="frame">
-      <iframe id="mapframe" title="Live Threat Map" loading="lazy" referrerpolicy="no-referrer"
-        sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
-      <div class="fallback" id="mapfallback" style="display:none">
-        <div class="big">⚠ Map blocked embedding in this window</div>
-        <div>Radware's map doesn't allow itself to be framed.<br>Open it live in a new tab instead:</div>
-        <a href="https://livethreatmap.radware.com/" target="_blank" rel="noopener">◉ Launch Live Threat Map ↗</a>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -246,7 +199,6 @@ const CMDS = {
       ['certs','certifications'],
       ['education','academic background'],
       ['contact','how to reach me'],
-      ['threatmap','open live global attack map'],
       ['resume','download CV (coming soon)'],
       ['banner','re-print the welcome banner'],
       ['clear','wipe the console'],
@@ -342,18 +294,12 @@ const CMDS = {
     out('<span class="c-dim">       Drop a <span class="c-cyan">resume.pdf</span> in the repo and I\'ll link it here.</span>');
   },
   banner(){ printBanner(); },
-  threatmap(){
-    out('<span class="c-amber">## LIVE GLOBAL THREAT MAP</span>'); blank();
-    out('<span class="c-dim">Opening real-time attack feed from </span><span class="c-cyan">radware.com</span><span class="c-dim"> …</span>');
-    out('<span class="c-grn">></span> <span class="lnk" onclick="openMap()" style="cursor:pointer">[ click to launch map window ]</span>');
-    openMap();
-  },
   clear(){ term.innerHTML=''; },
   ls(){ out('<span class="c-cyan">whoami  summary  experience  skills  certs  education  contact  resume</span>'); },
   sudo(){ out('<span class="c-red">[denied]</span> nice try — this operator audits its own privilege escalations. 😏'); },
   exit(){ out('<span class="c-dim">Connection to soc-console closed. (just kidding — scroll up 😄)</span>'); },
 };
-const ALIASES={man:'help','?':'help',about:'whoami',work:'experience',projects:'experience',info:'whoami',cls:'clear',email:'contact',map:'threatmap',threats:'threatmap',attackmap:'threatmap'};
+const ALIASES={man:'help','?':'help',about:'whoami',work:'experience',projects:'experience',info:'whoami',cls:'clear',email:'contact'};
 
 function run(raw){
   const cmd=raw.trim(); if(!cmd) return;
@@ -367,7 +313,7 @@ function run(raw){
 }
 
 /* chips */
-const CHIPS=['whoami','summary','experience','skills','certs','education','contact','threatmap','help','clear'];
+const CHIPS=['whoami','summary','experience','skills','certs','education','contact','help','clear'];
 const chipWrap=document.getElementById('chips');
 CHIPS.forEach(c=>{ const s=document.createElement('span'); s.className='chip'; s.textContent=c; s.onclick=()=>{ input.value=c; run(c); input.value=''; input.focus(); }; chipWrap.appendChild(s); });
 
@@ -390,28 +336,6 @@ function printBanner(){
   out('<span class="c-dim">Type </span><span class="c-grn">help</span><span class="c-dim"> to see commands, or tap a chip below. Try </span><span class="c-grn">whoami</span><span class="c-dim">.</span>');
   blank();
 }
-
-/* ============ THREAT MAP MODAL ============ */
-const MAP_URL="https://livethreatmap.radware.com/";
-const overlay=document.getElementById('overlay');
-const mapframe=document.getElementById('mapframe');
-const mapfallback=document.getElementById('mapfallback');
-let mapLoaded=false, mapTimer=null;
-function openMap(){
-  overlay.classList.add('on');
-  mapfallback.style.display='none';
-  if(!mapframe.src){
-    mapLoaded=false;
-    mapframe.onload=()=>{ mapLoaded=true; };
-    mapframe.onerror=()=>{ mapfallback.style.display='flex'; };
-    mapframe.src=MAP_URL;
-    clearTimeout(mapTimer);
-    mapTimer=setTimeout(()=>{ if(!mapLoaded) mapfallback.style.display='flex'; },6500);
-  }
-}
-function closeMap(){ overlay.classList.remove('on'); }
-overlay.addEventListener('click',e=>{ if(e.target===overlay) closeMap(); });
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeMap(); });
 
 /* ============ BOOT SEQUENCE ============ */
 const BOOT=[
@@ -459,9 +383,9 @@ function pushFeed(){ if(!feed)return;
   const d=new Date().toLocaleTimeString('en-GB');
   const line=document.createElement('div');
   line.innerHTML=`<span class="t">${d}</span> <span class="ip">${rip()}</span> <span class="${e[0]}">${e[1]}</span>`;
-  feed.prepend(line); while(feed.children.length>8) feed.lastChild.remove();
+  feed.prepend(line); while(feed.children.length>24) feed.lastChild.remove();
 }
-setInterval(pushFeed, 1800); for(let i=0;i<5;i++) setTimeout(pushFeed,i*120);
+setInterval(pushFeed, 1200); for(let i=0;i<14;i++) setTimeout(pushFeed,i*90);
 </script>
 </body>
 </html>
