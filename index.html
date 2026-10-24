@@ -100,6 +100,20 @@
   .feed > div{animation:fade .3s ease both}
   .feed .t{color:var(--dim)} .feed .ip{color:var(--cyan)} .feed .blk{color:var(--grn)} .feed .alrt{color:var(--amber)}
   .clock{font-size:11.5px;color:var(--dim)} .clock b{color:var(--cyan)}
+
+  /* defense grid canvas */
+  .gridwrap{position:relative}
+  #grid{width:100%;height:172px;display:block;border:1px solid var(--line);border-radius:10px;
+    background:radial-gradient(130% 120% at 72% 34%,rgba(63,210,255,.06),transparent 58%),rgba(5,8,13,.6)}
+  .gridstat{display:flex;gap:10px;margin-top:9px}
+  .gridstat .g{flex:1;border:1px solid var(--line);border-radius:8px;padding:7px 9px;background:rgba(10,15,23,.5)}
+  .gridstat .g .n{font-size:17px;font-weight:700;line-height:1}
+  .gridstat .g.ok .n{color:var(--grn)} .gridstat .g.thr .n{color:var(--red)}
+  .gridstat .g .l{font-size:9.5px;color:var(--faint);letter-spacing:.5px;margin-top:3px;text-transform:uppercase}
+
+  /* profile photo */
+  .avatar-sm{width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid var(--grn);box-shadow:0 0 10px rgba(57,255,155,.35);flex:none}
+  .who-av{width:94px;height:94px;border-radius:12px;object-fit:cover;object-position:center top;border:1px solid var(--line2);box-shadow:0 0 0 1px rgba(57,255,155,.25),0 0 22px rgba(57,255,155,.16);float:left;margin:2px 18px 10px 0}
 </style>
 </head>
 <body>
@@ -121,6 +135,7 @@
 <div class="shell" id="shell">
   <div class="bar">
     <div class="lights"><i class="r"></i><i class="y"></i><i class="g"></i></div>
+    <img class="avatar-sm" src="assets/dwij.jpg" alt="Dwij Parekh">
     <div class="title"><b>dwij@soc-console</b>: ~/portfolio &mdash; secure shell</div>
     <div class="status">
       <span class="thr">THREAT LVL: <b>GUARDED</b></span>
@@ -132,6 +147,14 @@
   <div class="main">
     <div id="term"></div>
     <aside class="side">
+      <div class="panel">
+        <h5>Live Defense Grid</h5>
+        <div class="gridwrap"><canvas id="grid"></canvas></div>
+        <div class="gridstat">
+          <div class="g ok"><div class="n" id="evCount">0</div><div class="l">events ingested</div></div>
+          <div class="g thr"><div class="n" id="blCount">0</div><div class="l">threats blocked</div></div>
+        </div>
+      </div>
       <div class="panel">
         <h5>Operator Skill Matrix</h5>
         <div class="mtr"><div class="top"><span>SIEM Engineering</span><b>92%</b></div><div class="track"><div class="fill" style="width:92%"></div></div></div>
@@ -206,6 +229,7 @@ const CMDS = {
     rows.forEach(([c,d])=>out(`  <span class="c-grn">${c.padEnd(12)}</span><span class="c-dim">${d}</span>`));
   },
   whoami(){
+    out('<img class="who-av" src="assets/dwij.jpg" alt="Dwij Parekh">');
     out(`<span class="c-pur">${PROFILE.name}</span>`);
     out(`<span class="c-cyan">${PROFILE.role}</span>`);
     blank();
@@ -213,6 +237,7 @@ const CMDS = {
     out(`<span class="kv">location</span> <b>${PROFILE.loc}</b>`);
     out('<span class="kv">mission</span>  <b>detect faster · reduce noise · surface real threats</b>');
     out('<span class="kv">long-term</span> <b>→ CISO</b>');
+    out('<div style="clear:both"></div>');
   },
   summary(){
     out('<span class="c-amber">## PROFESSIONAL SUMMARY</span>'); blank();
@@ -357,11 +382,19 @@ function bootStep(){
   const d=document.createElement('div'); d.innerHTML=BOOT[bi]; bl.appendChild(d); bi++;
   setTimeout(bootStep, 230);
 }
+function typeCommand(cmd){
+  let i=0; input.disabled=true;
+  (function t(){
+    if(i<=cmd.length){ input.value=cmd.slice(0,i); i++; setTimeout(t,65); }
+    else { input.disabled=false; run(cmd); input.value=''; input.focus(); }
+  })();
+}
 function skipBoot(){
   if(booted) return; booted=true;
   const b=document.getElementById('boot'); b.style.opacity='0';
   setTimeout(()=>{ b.remove(); document.getElementById('shell').classList.add('on');
-    printBanner(); input.focus(); }, 450);
+    printBanner(); input.focus(); startGrid();
+    setTimeout(()=>typeCommand('whoami'), 650); }, 450);
 }
 document.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!booted) skipBoot(); });
 setTimeout(bootStep, 500);
@@ -386,6 +419,67 @@ function pushFeed(){ if(!feed)return;
   feed.prepend(line); while(feed.children.length>24) feed.lastChild.remove();
 }
 setInterval(pushFeed, 1200); for(let i=0;i<14;i++) setTimeout(pushFeed,i*90);
+
+/* ============ DEFENSE GRID CANVAS ============ */
+let gridStarted=false;
+function startGrid(){
+  if(gridStarted) return; gridStarted=true;
+  const cv=document.getElementById('grid'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  let W=0,H=0;
+  const sources=[{k:'FW'},{k:'EP'},{k:'VPN'},{k:'MAIL'},{k:'WIN'}];
+  const core={x:0,y:0};
+  function layout(){
+    const r=cv.getBoundingClientRect(); W=r.width; H=r.height;
+    cv.width=Math.max(1,W*dpr); cv.height=Math.max(1,H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+    const lx=W*0.18, top=H*0.17, bot=H*0.83;
+    sources.forEach((s,i)=>{ s.x=lx; s.y=top+(bot-top)*(i/(sources.length-1)); });
+    core.x=W*0.80; core.y=H*0.5;
+  }
+  layout(); window.addEventListener('resize',layout);
+  let packets=[], pulses=[], ev=2847, bl=63, acc=0, last=performance.now();
+  function spawn(){
+    const s=sources[Math.floor(Math.random()*sources.length)];
+    packets.push({sx:s.x,sy:s.y,t:0,sp:0.006+Math.random()*0.007,threat:Math.random()<0.16});
+  }
+  function frame(now){
+    requestAnimationFrame(frame);
+    if(cv.offsetParent===null){ last=now; return; }
+    const dt=now-last; last=now;
+    acc+=dt; if(acc>470){ acc=0; spawn(); }
+    ctx.clearRect(0,0,W,H);
+    sources.forEach(s=>{ ctx.strokeStyle='rgba(63,210,255,.10)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(core.x,core.y); ctx.stroke(); });
+    packets.forEach(p=>{ p.t+=p.sp;
+      const x=p.sx+(core.x-p.sx)*p.t, y=p.sy+(core.y-p.sy)*p.t;
+      const col=p.threat?'#ff5d6c':'#3fd2ff';
+      ctx.fillStyle=col; ctx.shadowColor=col; ctx.shadowBlur=8;
+      ctx.beginPath(); ctx.arc(x,y,2.6,0,7); ctx.fill(); ctx.shadowBlur=0; });
+    packets=packets.filter(p=>{ if(p.t>=1){
+      if(p.threat){ bl++; pulses.push({r:6,max:28,c:'#ff5d6c'}); }
+      else { ev++; pulses.push({r:4,max:18,c:'#39ff9b'}); }
+      return false; } return true; });
+    pulses.forEach(pu=>pu.r+=0.9);
+    pulses=pulses.filter(pu=>pu.r<pu.max);
+    pulses.forEach(pu=>{ const a=Math.max(0,1-pu.r/pu.max);
+      ctx.globalAlpha=a; ctx.strokeStyle=pu.c; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(core.x,core.y,pu.r,0,7); ctx.stroke(); ctx.globalAlpha=1; });
+    sources.forEach(s=>{ ctx.fillStyle='#0a0f17'; ctx.strokeStyle='rgba(63,210,255,.55)'; ctx.lineWidth=1.2;
+      ctx.beginPath(); ctx.arc(s.x,s.y,5,0,7); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#6f8295'; ctx.font='9px "JetBrains Mono",monospace'; ctx.textAlign='right'; ctx.textBaseline='middle';
+      ctx.fillText(s.k,s.x-9,s.y); });
+    const pr=8+Math.sin(now/600)*1.5;
+    ctx.fillStyle='rgba(57,255,155,.12)'; ctx.beginPath(); ctx.arc(core.x,core.y,pr+8,0,7); ctx.fill();
+    ctx.fillStyle='#39ff9b'; ctx.shadowColor='#39ff9b'; ctx.shadowBlur=14;
+    ctx.beginPath(); ctx.arc(core.x,core.y,7,0,7); ctx.fill(); ctx.shadowBlur=0;
+    ctx.fillStyle='#39ff9b'; ctx.font='bold 9px "JetBrains Mono",monospace'; ctx.textAlign='center'; ctx.textBaseline='top';
+    ctx.fillText('SIEM',core.x,core.y+12);
+    const ec=document.getElementById('evCount'), bc=document.getElementById('blCount');
+    if(ec) ec.textContent=ev.toLocaleString(); if(bc) bc.textContent=bl.toLocaleString();
+  }
+  requestAnimationFrame(frame);
+}
 </script>
 </body>
 </html>
